@@ -32,55 +32,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             FirstAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    List(label = "Имя", modifier = Modifier.padding(innerPadding))
+                    MainComponent(modifier = Modifier.padding(innerPadding))
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Input(label: String, inputText: MutableState<String>, modifier: Modifier) {
-    Row(modifier = modifier) {
-        Text(
-            text = label,
-            modifier = modifier,
-            color = colorResource(R.color.purple_700)
-        )
-        TextField(
-            value = inputText.value,
-            onValueChange = {text -> inputText.value = text},
-            modifier = modifier
-        )
-    }
-}
-
-@Composable
-fun List(label: String, modifier: Modifier = Modifier) {
-    val buffer = remember{mutableStateOf("")}
-    val message = remember{mutableStateOf("")}
-    val messages = remember { mutableStateListOf<String>() }
-
-    Column(modifier = modifier) {
-        LazyColumn(modifier = modifier.fillMaxWidth()) {
-            item { Row() { Text(text = "TEXT") } }
-            items(messages){msg -> Text(text = msg)}
-        }
-
-        Text(
-            text = message.value,
-            modifier = modifier,
-            color = colorResource(R.color.teal_700)
-        )
-
-        Input(label = "Имя", inputText = buffer, modifier = modifier)
-
-        Button(
-            content = {Text(text = "Сохранить")},
-            modifier = modifier,
-            onClick = {
-                message.value = buffer.value
-                messages.add(buffer.value)
-            })
     }
 }
